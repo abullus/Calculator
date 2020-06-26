@@ -5,9 +5,14 @@ function printWelcomeMessage (){
     console.log("============================")
 }
 
-function getANumber (){
+function getStringInput (prompt){
+     console.log(prompt);
+     return readline.prompt();
+}
+
+function getNumberInput (prompt){
     while (true){
-        Input = readline.prompt();
+        let Input = getStringInput(prompt)
         if (isNaN(Input)){
             console.log("Please enter a number: ")
         } else{
@@ -16,25 +21,27 @@ function getANumber (){
     }
 }
 
-function getInputs(){
+function getOperatorInput (){
+    let Input
+    do {
+        Input = getStringInput("Please enter one of +,-,*,/: ")
+    } while (Input != "+" && Input != "-" && Input != "*" && Input != "/");
+    return Input;
+}
+
+function generateNumbersArray(Size){
     let Numbers = []
-    console.log('Please enter the operator: ');
-    const Operator = readline.prompt();
-    
-    console.log('How many numbers do you want to '+Operator+' ?')
-    const Size = getANumber();
-    
     for (let i = 0; i < Size; i++) {
-        console.log('Please enter number '+(i+1));
-        Numbers[i] = getANumber();
+        Numbers[i] = getNumberInput('Please enter number '+(i+1));
     }
-    return {
-        Operator, Size, Numbers
-    }
+    return Numbers
 }
 
 function performOneCalculation(){
-    let {Operator, Size, Numbers} = getInputs()
+    const Operator = getOperatorInput()
+    const Size = getNumberInput('How many numbers do you want to '+Operator+' ?');
+    const Numbers = generateNumbersArray(Size);
+    
     let Output  = Numbers[0]
     for (let j = 1; j < Size; j++){
         switch (Operator) {
