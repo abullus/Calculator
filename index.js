@@ -37,13 +37,9 @@ function generateNumbersArray(Size){
     return Numbers
 }
 
-function performOneCalculation(){
-    const Operator = getOperatorInput()
-    const Size = getNumberInput('How many numbers do you want to '+Operator+' ?');
-    const Numbers = generateNumbersArray(Size);
-    
+function computeTheAnswer (Numbers, Operator){
     let Output  = Numbers[0]
-    for (let j = 1; j < Size; j++){
+    for (let j = 1; j < Numbers.length; j++){
         switch (Operator) {
             case '+':
                 Output += Numbers[j];
@@ -58,10 +54,18 @@ function performOneCalculation(){
                 Output /= Numbers[j];
                 break;
             default:
-                console.log("Sorry, I don't understand ${Operator}.")
+                console.log("Sorry, I don't understand.")
         }
-    }    
-    console.log(Output);
+    }
+    return Output
+}
+
+function performOneCalculation(){
+    const Operator = getOperatorInput()
+    const Size = getNumberInput('How many numbers do you want to '+Operator+' ?');
+    const Numbers = generateNumbersArray(Size);
+    
+    console.log(computeTheAnswer(Numbers,Operator));
 }
 
 printWelcomeMessage()
