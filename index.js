@@ -1,6 +1,7 @@
 const readline = require('readline-sync');
 const ARITHMETIC_MODE = 1;
 const VOWEL_COUNTING_MODE = 2
+const LETTER_COUNTING_MODE = 3
 
 function printWelcomeMessage (){
     console.log(`Welcome to the calculator!
@@ -28,8 +29,9 @@ function getCalculationMode (){
     do {
         Input = getNumberInput(`Which calculator mode would you like?
 1) Arithmetic
-2) Vowel Counting`)
-    } while (Input != 2 && Input != 1)
+2) Vowel Counting
+3) Letter Counting`)
+    } while (Input != 2 && Input != 1 && Input != 3)
     return Input
 }
 
@@ -81,9 +83,25 @@ function performOneArithmeticCalculation(){
 }
 
 function generateVowelCountObject(Str){
+    var Counts  = {A: 0, E: 0, I: 0, O: 0, U: 0}
+    for (let Letter of Str) {
+        const upperLetter = Letter.toUpperCase();
+        if (Counts.hasOwnProperty(upperLetter)) {
+            Counts[upperLetter]++;
+        }
+    }
+    return Counts
+}
+
+function performOneVowelCountingCalculation(){
+    const Str = getStringInput('Please enter your string of text: ')
+    const Counts = generateVowelCountObject(Str)
+    printTheLetterCount(Counts)
+}
+
+function generateLetterCountObject(Str){
     var Counts = new Object()
-    Str = Str.toLowerCase().split(' ').join('').split('')
-    console.log(Str)
+    Str = Str.toUpperCase().split(' ').join('').split('')
     for (let i =0;i < Str.length;i++){
         Counts[Str[i]] = 0
     }
@@ -91,20 +109,18 @@ function generateVowelCountObject(Str){
         Counts[Str[j]]+=1;
     }
     return Counts
-    
-
 }
 
-function printTheVowelCount(Counts){
+function printTheLetterCount(Counts){
     for (const letter in Counts){
         console.log(`${letter}: ${Counts[letter]}`)
     }
 }
 
-function performOneVowelCountingCalculation(){
+function performOneLetterCountingCalculation(){
     const Str = getStringInput('Please enter your string of text: ')
-    const Counts = generateVowelCountObject(Str)
-    printTheVowelCount(Counts)
+    const Counts = generateLetterCountObject(Str)
+    printTheLetterCount(Counts)
 }
 
 printWelcomeMessage()
@@ -113,7 +129,8 @@ while (true) {
     if (calculationMode === ARITHMETIC_MODE){
         performOneArithmeticCalculation()
     }else if (calculationMode === VOWEL_COUNTING_MODE){
-        performOneVowelCountingCalculation ();
+        performOneVowelCountingCalculation();
+    }else if (calculationMode === LETTER_COUNTING_MODE){
+        performOneLetterCountingCalculation ();
     }
-    
 }
