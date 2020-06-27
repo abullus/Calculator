@@ -1,8 +1,10 @@
 const readline = require('readline-sync');
+const ARITHMETIC_MODE = 1;
+const VOWEL_COUNTING_MODE = 2
 
 function printWelcomeMessage (){
-    console.log('Welcome to the calculator!');
-    console.log("============================")
+    console.log(`Welcome to the calculator!
+    ============================`)
 }
 
 function getStringInput (prompt){
@@ -19,6 +21,16 @@ function getNumberInput (prompt){
             return parseFloat(Input)
         }
     }
+}
+
+function getCalculationMode (){
+    let Input 
+    do {
+        Input = getNumberInput(`Which calculator mode would you like?
+1) Arithmetic
+2) Vowel Counting`)
+    } while (Input != 2 && Input != 1)
+    return Input
 }
 
 function getOperatorInput (){
@@ -60,15 +72,48 @@ function computeTheAnswer (Numbers, Operator){
     return Output
 }
 
-function performOneCalculation(){
+function performOneArithmeticCalculation(){
     const Operator = getOperatorInput()
-    const Size = getNumberInput('How many numbers do you want to '+Operator+' ?');
+    const Size = getNumberInput(`How many numbers do you want to ${Operator} ?`);
     const Numbers = generateNumbersArray(Size);
     
     console.log(computeTheAnswer(Numbers,Operator));
 }
 
+function generateVowelCountObject(Str){
+    var Counts = new Object()
+    Str = Str.toLowerCase().split(' ').join('').split('')
+    console.log(Str)
+    for (let i =0;i < Str.length;i++){
+        Counts[Str[i]] = 0
+    }
+    for (let j = 0; j < Str.length; j++) {
+        Counts[Str[j]]+=1;
+    }
+    return Counts
+    
+
+}
+
+function printTheVowelCount(Counts){
+    for (const letter in Counts){
+        console.log(`${letter}: ${Counts[letter]}`)
+    }
+}
+
+function performOneVowelCountingCalculation(){
+    const Str = getStringInput('Please enter your string of text: ')
+    const Counts = generateVowelCountObject(Str)
+    printTheVowelCount(Counts)
+}
+
 printWelcomeMessage()
 while (true) {
-    performOneCalculation()
+    const calculationMode = getCalculationMode ();
+    if (calculationMode === ARITHMETIC_MODE){
+        performOneArithmeticCalculation()
+    }else if (calculationMode === VOWEL_COUNTING_MODE){
+        performOneVowelCountingCalculation ();
+    }
+    
 }
