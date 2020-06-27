@@ -9,7 +9,7 @@ const LETTER_COUNTING_MODE = 3
 function printWelcomeMessage (){
     console.log(`Welcome to the calculator!
     ============================`)
-}
+} 
 
 printWelcomeMessage()
 while (true) {

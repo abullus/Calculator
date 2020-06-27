@@ -9,24 +9,26 @@ function generateNumbersArray(Size) {
 }
 
 function computeTheAnswer(Numbers, Operator) {
-    let Output = Numbers[0];
-    for (let j = 1; j < Numbers.length; j++) {
-        switch (Operator) {
-            case '+':
-                Output += Numbers[j];
-                break;
-            case '-':
-                Output -= Numbers[j];
-                break;
-            case '*':
-                Output *= Numbers[j];
-                break;
-            case '/':
-                Output /= Numbers[j];
-                break;
-            default:
-                console.log("Sorry, I don't understand.");
-        }
+    let Output
+    switch (Operator) {
+        case '+':
+            Output = Numbers.reduce(function(accumulator,current) {return accumulator + current});
+            break;
+        case '-':
+            Output = Numbers.reduce(function(accumulator,current) {return accumulator - current});
+            break;
+        case '*':
+            Output = Numbers.reduce(function(accumulator,current) {return accumulator * current});
+            break;
+        case '/':
+            if (Numbers.indexOf(0,1) != -1) {
+                console.log('\nZero divisors have been skipped \n')
+            } 
+            Numbers = Numbers.filter(function(value) {return value != 0})
+            Output = Numbers.reduce(function(accumulator,current) {return accumulator / current});
+            break;
+        default:
+            console.log("Sorry, I don't understand.");
     }
     return Output;
 }
