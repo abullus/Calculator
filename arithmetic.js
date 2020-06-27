@@ -21,6 +21,10 @@ function computeTheAnswer(Numbers, Operator) {
             Output = Numbers.reduce(function(accumulator,current) {return accumulator * current});
             break;
         case '/':
+            if (Numbers.indexOf(0,1) != -1) {
+                console.log('\nZero divisors have been skipped \n')
+            } 
+            Numbers = Numbers.filter(function(value) {return value != 0})
             Output = Numbers.reduce(function(accumulator,current) {return accumulator / current});
             break;
         default:
