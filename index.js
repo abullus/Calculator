@@ -20,5 +20,7 @@ while (true) {
         vowelCounting.performOneVowelCountingCalculation();
     }else if (calculationMode === LETTER_COUNTING_MODE){
         letterCounting.performOneLetterCountingCalculation ();
+    } else {
+        console.log(`${calculationMode} is not a valid mode`)
     }
 }
